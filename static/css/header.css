@@ -1,0 +1,58 @@
+.header {
+  height: 40vh;
+  background-image: url("../images/header-image.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.header-image-container {
+}
+
+/* NAV BAR */
+
+nav {
+  background-color: #bdabdc;
+}
+.nav-logo {
+  height: 80px;
+}
+.menu li a {
+  font-size: 1.3em;
+  color: #4a2781;
+}
+
+/* INTRO */
+.intro-p {
+  width: 80%;
+}
+
+/* FEATURED SECTION */
+.card {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #bdabdc;
+}
+
+.featured-thumbnail {
+  background-color: #bdabdc;
+}
+
+/* FOOTER */
+footer {
+  background-color: #bdabdc;
+}
+
+.footer-menu {
+  display: flex;
+  justify-content: space-around;
+  text-decoration: none;
+}
+
+.footer-menu a {
+  text-decoration: none;
+  color: #4A2781;
+}
+
+.footer-logo {
+  height: 80px;
+}
