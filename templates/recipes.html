@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block recipes_type_h1 %}
+<h1>Vegan Recipes</h1>
+{% endblock  %}
+
+{% block intro_paragraph %}
+  <p>
+    Vegan recipes composed entirely of plant-based ingredients and built around a diverse range of foods including fruits,
+    vegetables, grains, legumes, nuts, and seeds. These recipes help you create meals that are rich, satisfying, and innovative, 
+    ranging from grain bowls and stir-fries to burgers and dairy-free desserts. 
+  </p>
+{% endblock %}
+
+ {% block main_section%}
+  <section class="recipe-section container py-5" id="custom-cards">
+        <h2 class="pb-2 border-bottom">Recipes</h2>
+        <div class="recipes row">  
+
+          {# Appetizers #}
+          {% set category_route = "appetizers" %}
+          {% set category = "Appetizers and Snacks"%}
+          {% set category_text = "Plant-based ingredients to achieve different flavors and textures."%}
+          {% include "./includes/recipe_category_cards.html" %}
+
+          {# Breakfast and Brunch #}
+          {% set category_route = "breakfast" %}
+          {% set category = "Breakfast and Brunch"%}
+          {% set category_text = "Plant-based ingredients to achieve different flavors and textures."%}
+          {% include "./includes/recipe_category_cards.html" %}
+
+          {# Soups and Stews #}
+          {% set category_route = "soups" %}
+          {% set category = "Soups and Stews"%}
+          {% set category_text = "Plant-based ingredients to achieve different flavors and textures."%}
+          {% include "./includes/recipe_category_cards.html" %}
+
+          {# Salads #}
+          {% set category_route = "salads" %}
+          {% set category = "Salads"%}
+          {% set category_text = "Plant-based ingredients to achieve different flavors and textures."%}
+          {% include "./includes/recipe_category_cards.html" %}
+
+          {# Entrees #}
+          {% set category_route = "entrees" %}          
+          {% set category = "Entrees"%}
+          {% set category_text = "Plant-based ingredients to achieve different flavors and textures."%}
+          {% include "./includes/recipe_category_cards.html" %}
+
+          {# Sides #}
+          {% set category_route = "sides" %}
+          {% set category = "Sides"%}
+          {% set category_text = "Plant-based ingredients to achieve different flavors and textures."%}
+          {% include "./includes/recipe_category_cards.html" %}
+
+          {# Desserts #}
+          {% set category_route = "desserts" %}
+          {% set category = "Desserts"%}
+          {% set category_text = "Plant-based ingredients to achieve different flavors and textures."%}
+          {% include "./includes/recipe_category_cards.html" %}
+
+          {# Beverages #}
+          {% set category_route = "beverages" %}
+          {% set category = "Beverages"%}
+          {% set category_text = "Plant-based ingredients to achieve different flavors and textures."%}
+          {% include "./includes/recipe_category_cards.html" %}
+        </div>
+  </section>
+  {% endblock %}

@@ -1,0 +1,20 @@
+<section class="container py-5">
+  <div class="row text-center justify-content-center">
+    <div class="col-12">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for item in list %}
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item[0] }}</h5>
+                    <p class="card-text">{{item[1]}}</p>
+                    {# <a href="{{ url_for('recipe_detail', recipe_id=stew.id) }}" class="btn btn-primary">View Recipe</a>#}
+                    
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

@@ -23,9 +23,9 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="menu navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="{{url_for('home')}}">Home</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="./recipes.html">Recipes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{url_for('recipes')}}">Recipes</a></li>
                     <li class="nav-item">
                         <a class="nav-link">About Us</a>
                     </li>
@@ -59,15 +59,7 @@
             </div>
         </div>
 
-        <section class="container">
-            <div class="row text-center justify-content-center">
-                <div class="col-12">
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                        {% block recipe_cards %}{% endblock %}
-                    </div>
-                </div>
-            </div>
-        </section>
+        {% block main_section%}{% endblock %}
 
         <footer>
             <div class="container">
@@ -80,7 +72,7 @@
 
                     <div class="col-sm-12 d-flex justify-content-center">
                         <form class="footer-form text-center ">
-                            <img src="./assets/images/plate-share-logo-resize.png" class="footer-logo" />
+                            <img src="{{url_for('static', filename='images/plate-share-logo-resize.png')}}" class="footer-logo" />
                             <div class="mb-3">
                                 <p>Sign-up for recipes, news, contest and more to your inbox</p>
                                 <input type="email" class="form-control" id="email-news" placeholder="Email" />

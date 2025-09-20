@@ -2,6 +2,7 @@ from flask import Flask, render_template
 import pypyodbc as odbc
 import requests
 
+
 app = Flask(__name__)
 
 #Sync Connection Variables
@@ -25,6 +26,17 @@ print(conn)#print to see if the connection is successful
 cursor = conn.cursor()#memory space
 all_recipes = cursor.execute("SELECT * FROM recipes")# send SQL command to the execute function
 
+@app.route("/")# this function only triggers if the user is accessing the('/') route
+def home():
+    return render_template("index.html")
+
+@app.route("/recipes")# this function only triggers if the user is accessing the('/recipes') route
+def recipes():
+    return render_template("recipes.html")
+
+#Q:can i shortent the below route in to one route and dynamically pass in the content   
+
+
 @app.route("/appetizers")# this function only triggers if the user is accessing the('/appetizers') route
 def get_all_appetizers():
     # Print all data pulled from appetizers query
@@ -35,20 +47,7 @@ def get_all_appetizers():
         appetizer_description = row['recipe_description']
         appetizers_list.append([appetizer_name, appetizer_description])
     print(appetizers_list)#print recipe name from each row
-    return render_template("appetizers.html", appetizer_recipes=appetizers_list)
-
-
-@app.route("/snacks")# this function only triggers if the user is accessing the('/snacks') route
-def get_all_snacks():
-    # Print all data pulled from snacks query
-    snacks = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 8")
-    snacks_list = []
-    for row in snacks:
-        snack_name = row['recipe_name']
-        snack_description = row['recipe_description']
-        snacks_list.append([snack_name, snack_description])
-    print(snacks_list)#print recipe name from each row
-    return render_template("snacks.html", snack_recipes=snacks_list)
+    return render_template("./recipe-categories/appetizers.html", appetizer_recipes=appetizers_list)
 
 @app.route("/breakfast")# this function only triggers if the user is accessing the('/breakfast') route
 def get_all_breakfast():
@@ -60,21 +59,7 @@ def get_all_breakfast():
         breakfast_description = row['recipe_description']
         breakfast_list.append([breakfast_name, breakfast_description])
     print(breakfast_list)#print recipe name from each row
-    return render_template("breakfast.html", breakfast_recipes=breakfast_list)
-
-
-@app.route("/brunch")# this function only triggers if the user is accessing the('/brunch') route
-def get_all_brunch():
-    # Print all data pulled from brunch query
-    brunch = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 9")
-    brunch_list = []
-    for row in brunch:
-        brunch_name = row['recipe_name']
-        brunch_description = row['recipe_description']
-        brunch_list.append([brunch_name, brunch_description])
-    print(brunch_list)#print recipe name from each row
-    return render_template("brunch.html", brunch_recipes=brunch_list)
-
+    return render_template("./recipe-categories/breakfast.html", breakfast_recipes=breakfast_list)
 
 @app.route("/soups")# this function only triggers if the user is accessing the('/soups') route
 def get_all_soups():
@@ -86,7 +71,7 @@ def get_all_soups():
         soups_description = row['recipe_description']
         soups_list.append([soups_name, soups_description])
     print(soups_list)#print recipe name from each row
-    return render_template("soups.html", soups_recipes=soups_list)
+    return render_template("./recipe-categories/soups.html", soup_recipes=soups_list)
 
 @app.route("/stews")# this function only triggers if the user is accessing the('/stews') route
 def get_all_stews():
@@ -98,8 +83,7 @@ def get_all_stews():
         stews_description = row['recipe_description']
         stews_list.append([stews_name, stews_description])
     print(stews_list)#print recipe name from each row
-    return render_template("stews.html", stews_recipes=stews_list)
-
+    return render_template("./recipe-categories/stews.html", stews_recipes=stews_list)
 
 @app.route("/salads")# this function only triggers if the user is accessing the('/salads') route
 def get_all_salads():
@@ -111,7 +95,19 @@ def get_all_salads():
         salads_description = row['recipe_description']
         salads_list.append([salads_name, salads_description])
     print(salads_list)#print recipe name from each row
-    return render_template("salads.html", salads_recipes=salads_list)
+    return render_template("./recipe-categories/salads.html", salads_recipes=salads_list)
+
+@app.route("/sides")# this function only triggers if the user is accessing the('/sides') route
+def get_all_sides():
+    # Print all data pulled from sides query
+    sides = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 6")
+    sides_list = []
+    for row in sides:
+        sides_name = row['recipe_name']
+        sides_description = row['recipe_description']
+        sides_list.append([sides_name, sides_description])
+    print(sides_list)#print recipe name from each row
+    return render_template("./recipe-categories/sides.html", side_recipes=sides_list)
 
 @app.route("/entrees")# this function only triggers if the user is accessing the('/entrees') route
 def get_all_entrees():
@@ -123,23 +119,73 @@ def get_all_entrees():
         entree_description = row['recipe_description']
         entrees_list.append([entree_name, entree_description])
     print(entrees_list)#print recipe name from each row
-    return render_template("entrees.html", entree_recipes=entrees_list)
+    return render_template("./recipe-categories/entrees.html", entree_recipes=entrees_list)
+
+@app.route("/snacks")# this function only triggers if the user is accessing the('/snacks') route
+def get_all_snacks():
+    # Print all data pulled from snacks query
+    snacks = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 8")
+    snacks_list = []
+    for row in snacks:
+        snack_name = row['recipe_name']
+        snack_description = row['recipe_description']
+        snacks_list.append([snack_name, snack_description])
+    print(snacks_list)#print recipe name from each row
+    return render_template("./recipe-categories/snacks.html", snack_recipes=snacks_list)
+
+@app.route("/brunch")# this function only triggers if the user is accessing the('/brunch') route
+def get_all_brunch():
+    # Print all data pulled from brunch query
+    brunch = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 9")
+    brunch_list = []
+    for row in brunch:
+        brunch_name = row['recipe_name']
+        brunch_description = row['recipe_description']
+        brunch_list.append([brunch_name, brunch_description])
+    print(brunch_list)#print recipe name from each row
+    return render_template("./recipe-categories/brunch.html", brunch_recipes=brunch_list)
+
+@app.route("/desserts")# this function only triggers if the user is accessing the('/desserts') route
+def get_all_desserts():
+    # Print all data pulled from desserts query
+    desserts = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 10")
+    desserts_list = []
+    for row in desserts:
+        desserts_name = row['recipe_name']
+        desserts_description = row['recipe_description']
+        desserts_list.append([desserts_name, desserts_description])
+    print(desserts_list)#print recipe name from each row
+    return render_template("./recipe-categories/desserts.html", dessert_recipes=desserts_list)
 
 
-@app.route("/sides")# this function only triggers if the user is accessing the('/sides') route
-def get_all_sides():
-    # Print all data pulled from sides query
-    sides = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 2")
-    sides_list = []
-    for row in sides:
-        sides_name = row['recipe_name']
-        sides_description = row['recipe_description']
-        sides_list.append([sides_name, sides_description])
-    print(sides_list)#print recipe name from each row
-    return render_template("sides.html", sides_recipes=sides_list)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

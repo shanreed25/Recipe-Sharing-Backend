@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block recipes_type_h1 %}
+<h1>Stews Recipes</h1>
+{% endblock  %}
+
+{% block intro_paragraph %}
+    <p>
+        A vegan stews made without any animal products, such as meat, poultry,
+        fish, dairy, or eggs. They are often hearty and satisfying, using a wide variety of plants
+        like vegetables, legumes, grains, tofu, and mushrooms to create rich flavors and textures.
+    </p>
+{% endblock %}
+
+
+
+
+
+{% block main_section%}
+{% set item = "stew" %}
+{% set list = stew_recipes %}
+
+{% include './includes/recipes_type.html' %}
+
+{% endblock %} 
+
+
+
+
