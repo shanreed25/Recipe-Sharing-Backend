@@ -23,12 +23,10 @@ Note : Any dependencies added / modified to this project which affect the runnin
 - CSS
 - SQL SERVER
 
-## Version 1
+# Version 1: Features
 - pulls recipes data from database and displays it on the page
 - pulls recipe name and description based on the category of the recipe
+- uses a different route for each recipe type to get a list of recipes of that type
+- uses 10 different files for a list recipes for each category 
 
 
-<!-- Appetizer Image: Photo by <a href="https://unsplash.com/@mariahhewines?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Mariah Hewines</a> on <a href="https://unsplash.com/photos/sliced-banana-and-red-apple-fruits-on-blue-surface-J89GBos3avo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a> -->
-      
-
-<!-- - Header Image: Photo by <a href="https://unsplash.com/@ellaolsson?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Ella Olsson</a> on <a href="https://unsplash.com/photos/three-bowls-of-salad-dish-with-lemon-on-table-rD3YrnhTmf0?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a> -->
