@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block recipes_type_h1 %}
+<h1>{{recipe[1]}}</h1>
+{% endblock  %}
+
+{% block intro_paragraph %}
+  <p>
+    {{recipe[2]}}
+  </p>
+    <p>
+    {{recipe[3]}} minutes
+  </p>
+    <p>
+    {{recipe[4]}} minutes
+  </p>
+{% endblock %}

@@ -18,9 +18,12 @@ Note : Any dependencies added / modified to this project which affect the runnin
 **A high level overview of the technologies used in the project and steps involved in generating the final builds for the project**
 - Python
 - Flask
-    - `index.html`, `recipe_category.html`, and `recipes.html` all extend base.html
-    - `recipes.html` includes `recipe_category_cards.html`
-    - `recipe_category.html` includes `recipes_type.html`
+    - home page: `index.html`
+    - category list page: `category_list.html`
+        - includes `recipe_category_cards.html`, contains a card for each category
+    - a list of recipes for the choosen category: `recipe_category.html`
+        - includes `recipe_list.html`, contains a list of recipes for a choosen category
+    - `index.html`, `recipe_category.html`, and `category_list.html` all extend base.html
 - Boothstrap
 - HTML
 - CSS

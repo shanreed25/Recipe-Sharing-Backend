@@ -24,9 +24,9 @@ conn = odbc.connect(connection_string)
 def home():
     return render_template("index.html")
 
-@app.route("/recipes")
-def recipes():
-    return render_template("recipes.html")
+@app.route("/recipes-categories")
+def get_recipe_categories():
+    return render_template("category_list.html")
 
 @app.route("/recipes/type/<recipe_type>")
 def get_recipes_by_type(recipe_type):
@@ -49,17 +49,56 @@ def get_recipes_by_type(recipe_type):
 
      local_cursor = conn.cursor()
      try:
-         recipes_cursor = local_cursor.execute("SELECT recipe_name, recipe_description FROM recipes WHERE recipe_type_id = ?", [recipe_type_id])
+         recipes_cursor = local_cursor.execute("SELECT recipe_id, recipe_name, recipe_description FROM recipes WHERE recipe_type_id = ?", [recipe_type_id])
          recipes_list = []
          for row in recipes_cursor:
-             recipe_name = row[0]
-             recipe_description = row[1]
-             recipes_list.append([recipe_name, recipe_description])
+             recipe_id = row[0]
+             recipe_name = row[1]
+             recipe_description = row[2]
+             recipes_list.append([recipe_id, recipe_name, recipe_description])
      finally:
          local_cursor.close()
 
      template_path = "recipe_category.html"
      return render_template(template_path, recipes=recipes_list, category_title=recipe_type)
+
+
+#create a route to display a specific recipe
+@app.route("/recipes/<int:recipe_id>")
+def get_recipe_details(recipe_id):
+    local_cursor = conn.cursor()
+    try:
+        recipe_cursor = local_cursor.execute(
+            "SELECT * FROM recipes WHERE recipe_id = ?", [recipe_id]
+        )
+        recipe = recipe_cursor.fetchone()
+        print(recipe)
+        if recipe is None:
+            return f"Recipe with ID {recipe_id} not found.", 404
+        recipe_details_list = []
+        recipe_id = recipe[0]
+        # recipe_details_list.append(recipe_id)
+        recipe_name = recipe[1]
+        # recipe_details_list.append(recipe_name)
+        recipe_description = recipe[2]
+        # recipe_details_list.append(recipe_description)
+        recipe_prep_time = recipe[3]
+        # recipe_details_list.append(recipe_prep_time)
+        recipe_cook_time = recipe[4]
+        # recipe_details_list.append(recipe_cook_time)
+        recipe_author_id = recipe[5]
+        # recipe_details_list.append(recipe_author_id)
+        recipe_type_id = recipe[6]
+        # recipe_details_list.append(recipe_type_id)
+
+        #  appending each field individually is a valid approach, it is verbose and prone to error if the number of desired fields changes
+        # this single line slicing operation accomplishes the same goal more efficiently and elegantly
+        # it is the "Pythonic" way to handle such a task
+        recipe_details_list = list(recipe[:7])
+
+    finally:
+        local_cursor.close()
+    return render_template("recipe_detail.html", recipe=recipe_details_list)
 
 if __name__ == "__main__":
     app.run(debug=True)
