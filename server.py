@@ -19,12 +19,12 @@ connection_string = f"""
 """
 #connect function
 conn = odbc.connect(connection_string)
-print(conn)#print to see if the connection is successful
 
-#Pull data
-
+# this cursor can be shared globally and reused across requests
+# but closing it for each request will cause failures for subsequent requests
+# it is better to create a new cursor per request instead 
+# of the global one to avoid concurrency issues and unexpected errors
 cursor = conn.cursor()#memory space
-all_recipes = cursor.execute("SELECT * FROM recipes")# send SQL command to the execute function
 
 @app.route("/")# this function only triggers if the user is accessing the('/') route
 def home():
@@ -34,194 +34,77 @@ def home():
 def recipes():
     return render_template("recipes.html")
 
-#Q:can i shortent the below route in to one route and dynamically pass in the content   
+# a single dynamic route with a variable for the recipe type
+@app.route("/recipes/type/<recipe_type>")# dynamic route with a variable for the recipe type
+def get_recipes_by_type(recipe_type):
+     # Mapping of recipe_type string to its corresponding ID
+     recipe_type_map = {
+         "appetizers": 1,
+         "breakfast": 2,
+         "soups": 3,
+         "stews": 4,
+         "salads": 5,
+         "sides": 6,
+         "entrees": 7,
+         "snacks": 8,
+         "brunch": 9,
+         "desserts": 10
+     }
+     # Query the database using the mapped ID
+     recipe_type_id = recipe_type_map.get(recipe_type.lower())
+     if recipe_type_id is None:
+         return f"Unknown recipe type: {recipe_type}", 404
+# creats a new cursor per request instead 
+# of the global one to avoid concurrency issues and unexpected errors
+     local_cursor = conn.cursor()
+        # closing the cursor after use, is good practice
+        # However, if an exception occurs during iteration, the cursor may not be closed
+        # using a try...finally block or a context 
+        # manager will ensure the cursor is always closed
+     try:
+            # Fetching all columns with SELECT * can be inefficient if the table has many columns 
+            # or large data. Specify only the required columns (e.g., recipe_name, recipe_description) 
+            # to reduce memory usage and improve performance.
+         recipes_cursor = local_cursor.execute("SELECT recipe_name, recipe_description FROM recipes WHERE recipe_type_id = ?", [recipe_type_id])
+         # print(recipes_cursor)
+         recipes_list = []
+         for row in recipes_cursor:
+             recipe_name = row[0]
+             recipe_description = row[1]
+             recipes_list.append([recipe_name, recipe_description])
+     finally:
+         local_cursor.close()
+     # Render the appropriate template and pass the recipes
+    #  template_path = f"./recipe-categories/{recipe_type.lower()}.html"
+
+    # a single file and dynamically passes in the recipe_type from the server to get a list for the selected category
+     template_path = "recipe_category.html"
+     return render_template(template_path, recipes=recipes_list, category_title=recipe_type)
 
 
-@app.route("/appetizers")# this function only triggers if the user is accessing the('/appetizers') route
-def get_all_appetizers():
-    # Print all data pulled from appetizers query
-    appetizers = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 1")
-    appetizers_list = []
-    for row in appetizers:
-        appetizer_name = row['recipe_name']
-        appetizer_description = row['recipe_description']
-        appetizers_list.append([appetizer_name, appetizer_description])
-    print(appetizers_list)#print recipe name from each row
-    return render_template("./recipe-categories/appetizers.html", appetizer_recipes=appetizers_list)
-
-@app.route("/breakfast")# this function only triggers if the user is accessing the('/breakfast') route
-def get_all_breakfast():
-    # Print all data pulled from breakfast query
-    breakfast = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 2")
-    breakfast_list = []
-    for row in breakfast:
-        breakfast_name = row['recipe_name']
-        breakfast_description = row['recipe_description']
-        breakfast_list.append([breakfast_name, breakfast_description])
-    print(breakfast_list)#print recipe name from each row
-    return render_template("./recipe-categories/breakfast.html", breakfast_recipes=breakfast_list)
-
-@app.route("/soups")# this function only triggers if the user is accessing the('/soups') route
-def get_all_soups():
-    # Print all data pulled from soups query
-    soups = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 3")
-    soups_list = []
-    for row in soups:
-        soups_name = row['recipe_name']
-        soups_description = row['recipe_description']
-        soups_list.append([soups_name, soups_description])
-    print(soups_list)#print recipe name from each row
-    return render_template("./recipe-categories/soups.html", soup_recipes=soups_list)
-
-@app.route("/stews")# this function only triggers if the user is accessing the('/stews') route
-def get_all_stews():
-    # Print all data pulled from stews query
-    stews = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 4")
-    stews_list = []
-    for row in stews:
-        stews_name = row['recipe_name']
-        stews_description = row['recipe_description']
-        stews_list.append([stews_name, stews_description])
-    print(stews_list)#print recipe name from each row
-    return render_template("./recipe-categories/stews.html", stews_recipes=stews_list)
-
-@app.route("/salads")# this function only triggers if the user is accessing the('/salads') route
-def get_all_salads():
-    # Print all data pulled from salads query
-    salads = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 5")
-    salads_list = []
-    for row in salads:
-        salads_name = row['recipe_name']
-        salads_description = row['recipe_description']
-        salads_list.append([salads_name, salads_description])
-    print(salads_list)#print recipe name from each row
-    return render_template("./recipe-categories/salads.html", salads_recipes=salads_list)
-
-@app.route("/sides")# this function only triggers if the user is accessing the('/sides') route
-def get_all_sides():
-    # Print all data pulled from sides query
-    sides = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 6")
-    sides_list = []
-    for row in sides:
-        sides_name = row['recipe_name']
-        sides_description = row['recipe_description']
-        sides_list.append([sides_name, sides_description])
-    print(sides_list)#print recipe name from each row
-    return render_template("./recipe-categories/sides.html", side_recipes=sides_list)
-
-@app.route("/entrees")# this function only triggers if the user is accessing the('/entrees') route
-def get_all_entrees():
-    # Print all data pulled from appetizers query
-    entrees = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 7")
-    entrees_list = []
-    for row in entrees:
-        entree_name = row['recipe_name']
-        entree_description = row['recipe_description']
-        entrees_list.append([entree_name, entree_description])
-    print(entrees_list)#print recipe name from each row
-    return render_template("./recipe-categories/entrees.html", entree_recipes=entrees_list)
-
-@app.route("/snacks")# this function only triggers if the user is accessing the('/snacks') route
-def get_all_snacks():
-    # Print all data pulled from snacks query
-    snacks = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 8")
-    snacks_list = []
-    for row in snacks:
-        snack_name = row['recipe_name']
-        snack_description = row['recipe_description']
-        snacks_list.append([snack_name, snack_description])
-    print(snacks_list)#print recipe name from each row
-    return render_template("./recipe-categories/snacks.html", snack_recipes=snacks_list)
-
-@app.route("/brunch")# this function only triggers if the user is accessing the('/brunch') route
-def get_all_brunch():
-    # Print all data pulled from brunch query
-    brunch = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 9")
-    brunch_list = []
-    for row in brunch:
-        brunch_name = row['recipe_name']
-        brunch_description = row['recipe_description']
-        brunch_list.append([brunch_name, brunch_description])
-    print(brunch_list)#print recipe name from each row
-    return render_template("./recipe-categories/brunch.html", brunch_recipes=brunch_list)
-
-@app.route("/desserts")# this function only triggers if the user is accessing the('/desserts') route
-def get_all_desserts():
-    # Print all data pulled from desserts query
-    desserts = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 10")
-    desserts_list = []
-    for row in desserts:
-        desserts_name = row['recipe_name']
-        desserts_description = row['recipe_description']
-        desserts_list.append([desserts_name, desserts_description])
-    print(desserts_list)#print recipe name from each row
-    return render_template("./recipe-categories/desserts.html", dessert_recipes=desserts_list)
-
-
-
+# In pypyodbc, cursors should be closed after fetching data
+# Closing the global cursor here will cause failures for subsequent database queries
+# in other routes
+# since the cursor is shared and reused the closing logic should be inside 
+# each route after data fetching, or use a new cursor per request. 
+# cursor.close()
 
 if __name__ == "__main__":
     app.run(debug=True)
 
+# The query result rows are accessed using row['recipe_name'], 
+# but pypyodbc cursors by default return rows as tuples, not dictionaries
+# This will raise a TypeError. You should either set the cursor to return dictionaries 
+# or access columns by index, e.g., row[0].
+    # recipe_name = row['recipe_name']
+    # recipe_description = row['recipe_description']
+    # recipe_name = row[0]
+    # recipe_description = row[1]
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# @app.route("/appetizers")# this function only triggers if the user is accessing the('/appetizers') route
-# def get_all_appetizers():
-#     # Print all data pulled from appetizers query
-#     appetizers = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 1")
-#     appetizers_list = []
-#     for row in appetizers:
-#         recipe_name = row['recipe_name']
-#         appetizers_list.append(recipe_name)
-#         print(row['recipe_name'])#print recipe name from each row
-#     return "<br>".join(f"<p>{name}</p>" for name in appetizers_list) 
-
-
-# @app.route("/breakfast")# this function only triggers if the user is accessing the('/breakfast') route
-# def get_all_breakfast():
-#     # Print all data pulled from breakfast query
-#     breakfast = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 2")
-#     appetizers_list = []
-#     for row in breakfast:
-#         recipe_name = row['recipe_name']
-#         appetizers_list.append(recipe_name)
-#         print(row['recipe_name'])#print recipe name from each row
-#     return "<br>".join(f"<p>{name}</p>" for name in appetizers_list) 
-
-
-
-# @app.route("/entrees")# this function only triggers if the user is accessing the('/entrees') route
-# def get_all_entrees():
-#     # Print all data pulled from entrees query
-#     entrees = cursor.execute("SELECT * FROM recipes WHERE recipe_type_id = 7")
-#     appetizers_list = []
-#     for row in entrees:
-#         recipe_name = row['recipe_name']
-#         appetizers_list.append(recipe_name)
-#         print(row['recipe_name'])#print recipe name from each row
-#     return "<br>".join(f"<p>{name}</p>" for name in appetizers_list) 
+# The query "SELECT * FROM recipes WHERE recipe_type_id = ?" uses positional parameters, 
+# but the parameter is passed as a list [recipe_type_id]. pypyodbc expects either a 
+# tuple or list, which is correct, but if recipe_type_id is None (when the mapping fails), 
+# this will result in a query with a NULL parameter, which may not be intended. 
+# The check on line 54 prevents this, but if the mapping ever returns 0, it will be 
+# treated as falsy. Consider using if recipe_type_id is None: for clarity and correctness.

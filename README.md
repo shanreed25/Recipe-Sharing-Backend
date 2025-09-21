@@ -25,8 +25,9 @@ Note : Any dependencies added / modified to this project which affect the runnin
 
 
 
+# Version 2: New Features
+- use a single dynamic route with a variable for the recipe type
+- uses a single file and dynamically passes in the recipe category from the server to get a list for the selected category
 
-<!-- Appetizer Image: Photo by <a href="https://unsplash.com/@mariahhewines?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Mariah Hewines</a> on <a href="https://unsplash.com/photos/sliced-banana-and-red-apple-fruits-on-blue-surface-J89GBos3avo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a> -->
-      
 
-<!-- - Header Image: Photo by <a href="https://unsplash.com/@ellaolsson?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Ella Olsson</a> on <a href="https://unsplash.com/photos/three-bowls-of-salad-dish-with-lemon-on-table-rD3YrnhTmf0?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a> -->
+
