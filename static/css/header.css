@@ -83,3 +83,10 @@ footer {
    background-position: center;
 
 }
+
+
+/*Recipe*/
+.servings-details{
+  border-top: .3rem solid #4A2781;
+  border-bottom: .3rem solid #4A2781;
+}

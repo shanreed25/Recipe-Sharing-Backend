@@ -5,13 +5,59 @@
 {% endblock  %}
 
 {% block intro_paragraph %}
-  <p>
-    {{recipe[2]}}
-  </p>
-    <p>
-    {{recipe[3]}} minutes
-  </p>
-    <p>
-    {{recipe[4]}} minutes
-  </p>
+            <p>
+                {{recipe[2]}}
+            </p>
+<div class="container mb-5">
+    <div class="servings-details row mb-5" style="height: 5rem;">
+        <div class="col text-center d-flex align-items-center justify-content-center" style="height: 100%;">
+            <p class="mb-0">
+                Prep Time: {{recipe[3]}} minutes
+            </p>
+        </div>
+
+        <div class="col text-center d-flex align-items-center justify-content-center" style="height: 100%;">
+            <p class="mb-0">
+                Cook Time: {{recipe[4]}} minutes
+            </p>
+        </div>
+
+        <div class="col text-center d-flex align-items-center justify-content-center" style="height: 100%;">
+            <p class="mb-0">
+                Total Time: {{recipe[3] + recipe[4]}}  minutes
+            </p>
+        </div>
+
+        <div class="col text-center d-flex align-items-center justify-content-center" style="height: 100%;">
+            <p class="mb-0">
+                Make: {{recipe[5]}} servings
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Ingredients</h3>
+            <ul>
+                {% for ingredient in ingredients %}
+                <li>{{ ingredient }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3>Instructions</h3>
+            <ol>
+                {% for step in instructions %}
+                <li>{{ step }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
 {% endblock %}

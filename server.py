@@ -91,6 +91,7 @@ def get_recipe_details(recipe_id):
         recipe_type_id = recipe[6]
         # recipe_details_list.append(recipe_type_id)
 
+        # Use slicing over individual assignments
         #  appending each field individually is a valid approach, it is verbose and prone to error if the number of desired fields changes
         # this single line slicing operation accomplishes the same goal more efficiently and elegantly
         # it is the "Pythonic" way to handle such a task
