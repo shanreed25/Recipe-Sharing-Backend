@@ -58,10 +58,10 @@
     - could create three different tables then use and join table to connect it with the recipes
 
         #### ingredients
-        | Column Name             | Data Type     | Constraint  |
-        | :---------------------- | :-----------: | ----------: |
-        | ingredient_id          | int           | PK          |
-        | ingredient_name        | string        | NOT NULL    |
+        | Column Name             | Data Type     | Constraint          |
+        | :---------------------- | :-----------: | ------------------: |
+        | ingredient_id           | int           | PK                  |
+        | ingredient_name         | string        | UNIQUE, NOT NULL    |
 
         #### measurement_units
         | Column Name             | Data Type     | Constraint  |
