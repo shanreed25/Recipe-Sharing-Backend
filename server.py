@@ -18,7 +18,7 @@ connection_string = f"""
 
 conn = odbc.connect(connection_string)
 
-cursor = conn.cursor()
+# cursor = conn.cursor()
 
 @app.route("/")
 def home():

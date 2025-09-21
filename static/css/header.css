@@ -18,7 +18,7 @@ nav {
 }
 .menu li a {
   font-size: 1.3em;
-  color: #4a2781;
+  color: #4A2781;
 }
 
 /* INTRO */
@@ -27,19 +27,19 @@ nav {
 }
 
 /* FEATURED SECTION */
-.card {
+.feature-section-card {
   background-size: cover;
   background-repeat: no-repeat;
-  background-color: #bdabdc;
+  background-color: #BDABDC;
 }
 
 .featured-thumbnail {
-  background-color: #bdabdc;
+  background-color: #BDABDC;
 }
 
 /* FOOTER */
 footer {
-  background-color: #bdabdc;
+  background-color: #BDABDC;
 }
 
 .footer-menu {
@@ -55,4 +55,31 @@ footer {
 
 .footer-logo {
   height: 80px;
+}
+
+
+/*recipe_category_cards.html*/
+.recipe-category-card-title a{
+  text-decoration: none;
+  color: #4A2781;
+  /* font-size: 3rem; */
+}
+
+.category-card {
+  background-color: #4A2781;
+}
+
+.category-card-image{
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.category-card-header, .category-card-footer {
+  background-color: #BDABDC;
+  
+}
+
+.category-card-image{
+   background-position: center;
+
 }
