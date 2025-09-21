@@ -23,7 +23,8 @@ Note : Any dependencies added / modified to this project which affect the runnin
         - includes `recipe_category_cards.html`, contains a card for each category
     - a list of recipes for the choosen category: `recipe_category.html`
         - includes `recipe_list.html`, contains a list of recipes for a choosen category
-    - `index.html`, `recipe_category.html`, and `category_list.html` all extend base.html
+    - a specific recipe details page: `recipe_detail.html`
+    - `index.html`, `recipe_category.html`, `category_list.html` and `recipe_detail.html` all extend base.html
 - Boothstrap
 - HTML
 - CSS
@@ -32,8 +33,9 @@ Note : Any dependencies added / modified to this project which affect the runnin
 
 
 # Version 2: New Features
-- use a single dynamic route with a variable for the recipe type
-- uses a single file and dynamically passes in the recipe category from the server to get a list for the selected category
+- single recipe details route
+    - shows recipe name, description and prep, cook and total time
+- recipe categories page layout changed
 
 
 
