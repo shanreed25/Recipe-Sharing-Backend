@@ -17,10 +17,11 @@
                 </div>
 
                 <div class="category-card-footer recipe-card-text-clamp card-footer overflow-hidden pb-5" >
+                  <a href="{{ url_for('get_recipe_details', recipe_id=item[0]) }}" >View Recipe</a>
                   <p class="card-text">
                     {{item[2]}}
                   </p>
-                  {#<a href="{{ url_for('get_recipe_details', recipe_id=item[0]) }}" class="btn btn-primary">View Recipe</a>#}
+                  
                 </div>
               </div>
             </div>

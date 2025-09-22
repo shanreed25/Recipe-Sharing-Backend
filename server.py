@@ -112,5 +112,7 @@ def get_recipe_details(recipe_id):
         local_cursor.close()
     return render_template("recipe_detail.html", recipe=recipe_details_list, ingredients=recipe_ingredients)
 
+
+
 if __name__ == "__main__":
     app.run(debug=True)
