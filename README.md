@@ -32,9 +32,9 @@ Note : Any dependencies added / modified to this project which affect the runnin
 
 
 
-# Version 2: New Features
+# Version 3: New Features
 - single recipe details route
-    - shows recipe name, description and prep, cook and total time
+    - shows recipe name, description, prep, cook and total time, ingredients and instructions
 - recipe categories page layout changed
 
 
