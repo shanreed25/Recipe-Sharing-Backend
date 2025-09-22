@@ -34,12 +34,9 @@ def get_recipes_by_type(recipe_type):
          "appetizers": 1,
          "breakfast": 2,
          "soups": 3,
-         "stews": 4,
          "salads": 5,
          "sides": 6,
          "entrees": 7,
-         "snacks": 8,
-         "brunch": 9,
          "desserts": 10
      }
 
@@ -59,7 +56,7 @@ def get_recipes_by_type(recipe_type):
      finally:
          local_cursor.close()
 
-     template_path = "recipe_category.html"
+     template_path = "recipe_cards_list.html"
      return render_template(template_path, recipes=recipes_list, category_title=recipe_type)
 
 
@@ -72,7 +69,6 @@ def get_recipe_details(recipe_id):
             "SELECT * FROM recipes WHERE recipe_id = ?", [recipe_id]
         )
         recipe = recipe_cursor.fetchone()
-        print(recipe)
         if recipe is None:
             return f"Recipe with ID {recipe_id} not found.", 404
         recipe_details_list = []
@@ -97,9 +93,24 @@ def get_recipe_details(recipe_id):
         # it is the "Pythonic" way to handle such a task
         recipe_details_list = list(recipe[:7])
 
+
+        ingredients_cursor = local_cursor.execute(
+            """
+            SELECT ri.quantity, mu.measurement_unit_name, i.ingredient_name
+            FROM recipes AS r
+            INNER JOIN recipe_ingredient AS ri ON r.recipe_id = ri.recipe_id
+            INNER JOIN measurement_units AS mu ON ri.measurement_unit_id = mu.measurement_unit_id
+            INNER JOIN ingredients AS i ON ri.ingredient_id = i.ingredient_id
+            WHERE r.recipe_id = ?
+            """, [recipe_id]
+        )
+        recipe_ingredients = ingredients_cursor.fetchall()
+        if recipe_ingredients is None:
+            return f"Recipe with ID {recipe_id} ingredients not found.", 404
+
     finally:
         local_cursor.close()
-    return render_template("recipe_detail.html", recipe=recipe_details_list)
+    return render_template("recipe_detail.html", recipe=recipe_details_list, ingredients=recipe_ingredients)
 
 if __name__ == "__main__":
     app.run(debug=True)
